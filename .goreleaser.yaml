@@ -1,0 +1,60 @@
+version: 2
+
+project_name: echtools
+
+before:
+  hooks:
+    - go mod download
+    - make licenses
+
+# One real binary per tool name (rather than symlinks: cmd/echtool dispatches
+# on its own argv0, see cmd/echtool/main.go, so each of these is a fully
+# working standalone binary, and this way zip archives on Windows don't need
+# symlink support).
+builds:
+  - id: echtool
+    binary: echtool
+    main: ./cmd/echtool
+    env: [CGO_ENABLED=0]
+    goos: [linux, darwin, windows]
+    goarch: [amd64, arm64]
+  - id: greasy
+    binary: greasy
+    main: ./cmd/echtool
+    env: [CGO_ENABLED=0]
+    goos: [linux, darwin, windows]
+    goarch: [amd64, arm64]
+  - id: dech
+    binary: dech
+    main: ./cmd/echtool
+    env: [CGO_ENABLED=0]
+    goos: [linux, darwin, windows]
+    goarch: [amd64, arm64]
+  - id: echconn
+    binary: echconn
+    main: ./cmd/echtool
+    env: [CGO_ENABLED=0]
+    goos: [linux, darwin, windows]
+    goarch: [amd64, arm64]
+  - id: echtest
+    binary: echtest
+    main: ./cmd/echtool
+    env: [CGO_ENABLED=0]
+    goos: [linux, darwin, windows]
+    goarch: [amd64, arm64]
+
+archives:
+  - id: default
+    ids: [echtool, greasy, dech, echconn, echtest]
+    files:
+      - THIRD_PARTY_LICENSES/*
+    formats: [tar.gz]
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+
+checksum:
+  name_template: checksums.txt
+
+changelog:
+  sort: asc
