@@ -18,34 +18,10 @@ builds:
     env: [CGO_ENABLED=0]
     goos: [linux, darwin, windows]
     goarch: [amd64, arm64]
-  - id: greasy
-    binary: greasy
-    main: ./cmd/echtool
-    env: [CGO_ENABLED=0]
-    goos: [linux, darwin, windows]
-    goarch: [amd64, arm64]
-  - id: dech
-    binary: dech
-    main: ./cmd/echtool
-    env: [CGO_ENABLED=0]
-    goos: [linux, darwin, windows]
-    goarch: [amd64, arm64]
-  - id: echconn
-    binary: echconn
-    main: ./cmd/echtool
-    env: [CGO_ENABLED=0]
-    goos: [linux, darwin, windows]
-    goarch: [amd64, arm64]
-  - id: echtest
-    binary: echtest
-    main: ./cmd/echtool
-    env: [CGO_ENABLED=0]
-    goos: [linux, darwin, windows]
-    goarch: [amd64, arm64]
 
 archives:
   - id: default
-    ids: [echtool, greasy, dech, echconn, echtest]
+    ids: [echtool]
     files:
       - THIRD_PARTY_LICENSES/*
     formats: [tar.gz]
