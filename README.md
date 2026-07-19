@@ -1,6 +1,9 @@
 ECH TOOL 
 ===
 
+ECH handshakes without ECH configuration in HTTPS RRs and fine-grained control over ECH handshakes. 
+
+
 ```
 Usage:
   echtool [command]
