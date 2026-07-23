@@ -5,7 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	echconfigfmt "github.com/jmuecke/echtools/pkg/echfmt"
+	echconfigfmt "github.com/netd-tud/echtool/pkg/echfmt"
 )
 
 func run(cmd *cobra.Command, o *options) error {

@@ -13,11 +13,11 @@ import (
 	"github.com/OmarTariq612/goech"
 	"github.com/sirupsen/logrus"
 
-	"github.com/jmuecke/echtools/internal/cli"
-	"github.com/jmuecke/echtools/pkg/dial"
-	"github.com/jmuecke/echtools/pkg/dnsrr"
-	"github.com/jmuecke/echtools/pkg/ech"
-	"github.com/jmuecke/echtools/pkg/echfmt"
+	"github.com/netd-tud/echtool/internal/cli"
+	"github.com/netd-tud/echtool/pkg/dial"
+	"github.com/netd-tud/echtool/pkg/dnsrr"
+	"github.com/netd-tud/echtool/pkg/ech"
+	"github.com/netd-tud/echtool/pkg/echfmt"
 )
 
 // Outcome of offering a varied config, used both as the JSON "status" value and

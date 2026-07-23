@@ -9,10 +9,10 @@ import (
 	"github.com/OmarTariq612/goech"
 	"github.com/sirupsen/logrus"
 
-	"github.com/jmuecke/echtools/pkg/dial"
-	"github.com/jmuecke/echtools/pkg/ech"
-	"github.com/jmuecke/echtools/pkg/echfmt"
-	"github.com/jmuecke/echtools/pkg/probe"
+	"github.com/netd-tud/echtool/pkg/dial"
+	"github.com/netd-tud/echtool/pkg/ech"
+	"github.com/netd-tud/echtool/pkg/echfmt"
+	"github.com/netd-tud/echtool/pkg/probe"
 )
 
 func run(out io.Writer, o *options, target, address string, list goech.ECHConfigList, dialFn dial.Fn) error {

@@ -6,7 +6,7 @@ import (
 	"github.com/OmarTariq612/goech"
 	"github.com/spf13/pflag"
 
-	"github.com/jmuecke/echtools/pkg/ech"
+	"github.com/netd-tud/echtool/pkg/ech"
 )
 
 // TLSParams holds the TLS/dial flags shared by every command that performs an

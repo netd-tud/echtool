@@ -7,7 +7,7 @@ import (
 	"github.com/cloudflare/circl/hpke"
 	"github.com/spf13/pflag"
 
-	"github.com/jmuecke/echtools/pkg/ech"
+	"github.com/netd-tud/echtool/pkg/ech"
 )
 
 func TestECHConfigOverridesValidate(t *testing.T) {

@@ -9,8 +9,8 @@ import (
 	"github.com/OmarTariq612/goech"
 	"github.com/spf13/cobra"
 
-	"github.com/jmuecke/echtools/internal/cli"
-	"github.com/jmuecke/echtools/pkg/echfmt"
+	"github.com/netd-tud/echtool/internal/cli"
+	"github.com/netd-tud/echtool/pkg/echfmt"
 )
 
 type options struct {

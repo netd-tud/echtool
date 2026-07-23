@@ -10,10 +10,10 @@ import (
 	"github.com/OmarTariq612/goech"
 	"github.com/sirupsen/logrus"
 
-	"github.com/jmuecke/echtools/internal/cli"
-	"github.com/jmuecke/echtools/pkg/dial"
-	"github.com/jmuecke/echtools/pkg/dnsrr"
-	"github.com/jmuecke/echtools/pkg/ech"
+	"github.com/netd-tud/echtool/internal/cli"
+	"github.com/netd-tud/echtool/pkg/dial"
+	"github.com/netd-tud/echtool/pkg/dnsrr"
+	"github.com/netd-tud/echtool/pkg/ech"
 )
 
 // runGracePeriod probes each domain to learn how long the server keeps accepting

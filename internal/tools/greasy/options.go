@@ -9,9 +9,9 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 
-	"github.com/jmuecke/echtools/internal/cli"
-	"github.com/jmuecke/echtools/pkg/ech"
-	"github.com/jmuecke/echtools/pkg/echfmt"
+	"github.com/netd-tud/echtool/internal/cli"
+	"github.com/netd-tud/echtool/pkg/ech"
+	"github.com/netd-tud/echtool/pkg/echfmt"
 )
 
 type options struct {

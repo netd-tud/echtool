@@ -12,7 +12,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/jmuecke/echtools/internal/cli"
+	"github.com/netd-tud/echtool/internal/cli"
 )
 
 // NewCmd returns the "test" command with its two mode subcommands. It owns its

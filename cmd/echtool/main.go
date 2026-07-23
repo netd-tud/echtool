@@ -8,9 +8,9 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 
-	"github.com/jmuecke/echtools/internal/tools/dech"
-	"github.com/jmuecke/echtools/internal/tools/echtest"
-	"github.com/jmuecke/echtools/internal/tools/greasy"
+	"github.com/netd-tud/echtool/internal/tools/dech"
+	"github.com/netd-tud/echtool/internal/tools/echtest"
+	"github.com/netd-tud/echtool/internal/tools/greasy"
 )
 
 func main() {

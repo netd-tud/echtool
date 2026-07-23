@@ -6,7 +6,7 @@ import (
 	"github.com/OmarTariq612/goech"
 	"golang.org/x/net/dns/dnsmessage"
 
-	"github.com/jmuecke/echtools/pkg/ech"
+	"github.com/netd-tud/echtool/pkg/ech"
 )
 
 // sampleList builds a small, valid ECHConfigList for use in HTTPS RR fixtures.

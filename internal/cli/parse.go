@@ -12,7 +12,7 @@ import (
 	"github.com/cloudflare/circl/hpke"
 	"github.com/spf13/pflag"
 
-	"github.com/jmuecke/echtools/pkg/echfmt"
+	"github.com/netd-tud/echtool/pkg/echfmt"
 )
 
 // cipherSuitesValue is a pflag.Value that parses "KDF/AEAD" specs (e.g.

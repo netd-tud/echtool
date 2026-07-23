@@ -6,7 +6,7 @@ package cli
 import (
 	"github.com/spf13/pflag"
 
-	"github.com/jmuecke/echtools/pkg/echfmt"
+	"github.com/netd-tud/echtool/pkg/echfmt"
 )
 
 // AddFormatFlag registers the --format/-o flag onto f, binding into p, so every

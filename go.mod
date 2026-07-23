@@ -1,4 +1,4 @@
-module github.com/jmuecke/echtools
+module github.com/netd-tud/echtool
 
 go 1.26.3
 

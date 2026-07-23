@@ -3,7 +3,7 @@ package dech
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/jmuecke/echtools/internal/cli"
+	"github.com/netd-tud/echtool/internal/cli"
 )
 
 // NewCmd returns the "dech" command, which decodes an ECHConfigList. The command
