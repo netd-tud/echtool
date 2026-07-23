@@ -30,18 +30,27 @@ const (
 	statusError       = "error"
 )
 
+// Machine-readable failure categories beyond dial.Classify's Kind (KindDNS,
+// KindTimeout, KindNetwork, KindCertificate, KindTLSAlert, KindOther), for
+// outcomes testVariation decides before ever calling dial.Classify.
+const (
+	errorKindECHRejected    = "ech_rejected"     // server sent RetryConfigs (Status == statusRejected)
+	errorKindECHNotAccepted = "ech_not_accepted" // handshake succeeded but ECH wasn't accepted
+)
+
 // variationResult is the outcome of one testVariation call: which field was
 // varied, its baseline and replaced values, the result, and the configs
 // involved (the offered config, and the server's retry configs on rejection).
 type variationResult struct {
-	Target   string // the target argument the variation was offered to, as given on the command line
-	Kind     string // the field that was varied, e.g. "public_name" or "config_id"
-	Original string // the baseline's value for that field
-	Replaced string // the value offered in its place
-	Status   string // one of the status constants above
-	Detail   string // human-readable elaboration (error text, or the server's suggested value)
-	Offered  goech.ECHConfigList
-	Retry    goech.ECHConfigList // set only when Status == statusRejected
+	Target    string // the target argument the variation was offered to, as given on the command line
+	Kind      string // the field that was varied, e.g. "public_name" or "config_id"
+	Original  string // the baseline's value for that field
+	Replaced  string // the value offered in its place
+	Status    string // one of the status constants above
+	ErrorKind string // machine-readable failure category; empty when Status == statusAccepted
+	Detail    string // human-readable elaboration (error text, or the server's suggested value)
+	Offered   goech.ECHConfigList
+	Retry     goech.ECHConfigList // set only when Status == statusRejected
 }
 
 // jsonRecord is variationResult's on-the-wire JSON shape. The *Parsed fields
@@ -53,6 +62,8 @@ type jsonRecord struct {
 	Original            string                           `json:"original"`
 	Replaced            string                           `json:"replaced"`
 	Status              string                           `json:"status"`
+	ErrorKind           string                           `json:"error_kind,omitempty"`
+	Detail              string                           `json:"detail,omitempty"`
 	OfferedConfig       string                           `json:"offered_config"`
 	OfferedConfigParsed echfmt.SerializableECHConfigList `json:"offered_config_parsed"`
 	RetryConfig         string                           `json:"retry_config,omitempty"`
@@ -70,6 +81,8 @@ func (r variationResult) toJSON() (jsonRecord, error) {
 		Original:            r.Original,
 		Replaced:            r.Replaced,
 		Status:              r.Status,
+		ErrorKind:           r.ErrorKind,
+		Detail:              r.Detail,
 		OfferedConfig:       offered,
 		OfferedConfigParsed: echfmt.ToSerializableList(r.Offered),
 	}
@@ -209,6 +222,7 @@ func testVariation(o *variationsOptions, host, address string, baseline goech.EC
 	cfg, err := o.tlsConfig(host, result.Offered)
 	if err != nil {
 		result.Status = statusError
+		result.ErrorKind = string(dial.KindOther)
 		result.Detail = fmt.Sprintf("error building TLS config: %v", err)
 		logrus.WithError(err).Errorf("variation %s=%q: error building TLS config", result.Kind, result.Replaced)
 		return result
@@ -221,6 +235,7 @@ func testVariation(o *variationsOptions, host, address string, baseline goech.EC
 	if rejectErr := ech.RetryConfigs(dialErr); rejectErr != nil {
 		retry, _ := goech.UnmarshalECHConfigList(rejectErr.RetryConfigList)
 		result.Status = statusRejected
+		result.ErrorKind = errorKindECHRejected
 		result.Retry = retry
 		result.Detail = "server returned RetryConfigs"
 		if len(retry) > 0 {
@@ -234,13 +249,16 @@ func testVariation(o *variationsOptions, host, address string, baseline goech.EC
 		return result
 	}
 	if dialErr != nil {
+		classified := dial.Classify(dialErr)
 		result.Status = statusFailed
-		result.Detail = dial.DescribeError(dialErr)
-		logrus.Warnf("variation %s=%q: failed (%s)", result.Kind, result.Replaced, result.Detail)
+		result.ErrorKind = string(classified.Kind)
+		result.Detail = classified.Message
+		logrus.Warnf("variation %s=%q: failed (%s: %s)", result.Kind, result.Replaced, result.ErrorKind, result.Detail)
 		return result
 	}
 	if !state.ECHAccepted {
 		result.Status = statusNotAccepted
+		result.ErrorKind = errorKindECHNotAccepted
 		result.Detail = "handshake succeeded but ECH was not accepted"
 		logrus.Infof("variation %s=%q: not accepted", result.Kind, result.Replaced)
 		return result
